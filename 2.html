@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Carousel</title>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <style>
+    body {
+        background-color: black;
+    }
+    .slide-show {
+      width: 80%; /* Přidáno pro lepší viditelnost */
+      margin: 0 auto; /* Přidáno pro umístění do středu */
+    }
+    .slide {
+      text-align: center;
+      padding: 20px; /* Přidáno pro vytvoření prostoru kolem kartičky */
+    }
+    .logo {
+      width: 150px; /* Přidáno pro pevnou velikost loga */
+      height: 150px;
+      margin: 0 auto; /* Přidáno pro zarovnání loga na střed */
+      object-fit: contain; /* Přidáno pro zachování poměru stran loga */
+    }
+    .title {
+      color: white;
+      font-size: 18px;
+      margin-top: 10px; /* Přidáno pro oddělení titulku od loga */
+    }
+    .subtitle {
+      color: gray;
+      font-size: 14px;
+    }
+    .slick-prev, .slick-next {
+      font-size: 0;
+      line-height: 0;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      outline: none;
+    }
+    .slick-prev {
+      left: 10px;
+    }
+    .slick-next {
+      right: 10px;
+    }
+    .slick-prev:before, .slick-next:before {
+      content: '\2190'; /* levá šipka */
+      font-size: 24px;
+      color: white;
+    }
+    .slick-next:before {
+      content: '\2192'; /* pravá šipka */
+    }
+  </style>
+</head>
+<body>
+
+<div class="slide-show">
+  <!-- Placeholder pro náhodné obrázky -->
+</div>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script type="text/javascript">
+  // Funkce pro získání náhodného obrázku (simulace)
+  function getRandomImage(usedImages) {
+    var images = [
+      'https://teepco.cz/files/img/reference/bsc.svg',
+      'https://teepco.cz/files/img/reference/dn_2x.png',
+      'https://teepco.cz/files/img/reference/globus_2x.png',
+      'https://teepco.cz/files/img/reference/csbeton_2x.png',
+      'https://teepco.cz/files/img/reference/bsc.svg',
+    ];
+
+    // Vyfiltruj již použité obrázky
+    var availableImages = images.filter(function(image) {
+      return !usedImages.includes(image);
+    });
+
+    // Pokud nejsou žádné dostupné obrázky, použijeme všechny
+    if (availableImages.length === 0) {
+      availableImages = images.slice();
+      usedImages.length = 0; // Vymažeme použité obrázky, abychom mohli začít znovu
+    }
+
+    var randomIndex = Math.floor(Math.random() * availableImages.length);
+    var randomImage = availableImages[randomIndex];
+    usedImages.push(randomImage); // Přidej použitý obrázek do pole
+    return randomImage;
+  }
+
+  // Pole pro sledování již použitých obrázků
+  var usedImages = [];
+
+  // Naplnění karuselu náhodnými obrázky
+  var slideShow = $('.slide-show');
+  for (var i = 0; i < 12; i++) {
+    var imageUrl = getRandomImage(usedImages);
+    var slide = $('<div class="slide"><img class="logo" src="' + imageUrl + '"><div class="title">Tile</div><div class="subtitle">Subtitle</div></div>'); // Přidán titulek a podtitulek pod každé logo
+    slideShow.append(slide);
+  }
+
+  // Inicializace karuselu pomocí Slick Carousel
+  $('.slide-show').slick({
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    prevArrow: '<button type="button" class="slick-prev" aria-label="Previous">Previous</button>',
+    nextArrow: '<button type="button" class="slick-next" aria-label="Next">Next</button>'
+  });
+</script>
+
+</body>
+</html>
