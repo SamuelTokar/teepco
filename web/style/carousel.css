@@ -81,7 +81,7 @@ button {
 }
 .line-title::after {
   width: 32px;
-  background: #e73700;
+  background: #000000;
 }
 
 /******* Middle section CSS Start ******/
